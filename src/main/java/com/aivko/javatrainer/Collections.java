@@ -1,5 +1,7 @@
 package com.aivko.javatrainer;
 
+import java.util.List;
+
 public class Collections {
     /**
      * Метод для примера
@@ -20,5 +22,27 @@ public class Collections {
         }
 
         return min;
+    }
+
+    /**
+     * Возвращает минимальное число из списка
+     * Если список пустой - возвращает {@link Integer#MAX_VALUE}
+     * @param list Список чисел
+     * @return Минимальное число
+     */
+    public static int findMinInList(List<Integer> list) {
+        // тут тебе нужно написать свою реализацию этого метода
+        return 0;
+    }
+
+    /**
+     * Возвращает среднее арифметическое всех чисел из списка
+     * Если список пустой или null - выбрасывает {@link IllegalArgumentException}
+     * @param list Список чисел
+     * @return Среднее арифметическое
+     */
+    public static float getAverage(List<Float> list) {
+        // тут тебе нужно написать свою реализацию этого метода
+        return 0f;
     }
 }
