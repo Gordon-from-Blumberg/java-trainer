@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +50,18 @@ public class CollectionsTest {
         );
     }
 
+    private static List<Arguments> addEvenArguments() {
+        return List.of(
+                Arguments.of(new ArrayList<Integer>(), new int[] {1, 2, 3}, List.of(2)),
+                Arguments.of(list(1), new int[] {1, 2, 3}, List.of(1, 2)),
+                Arguments.of(list(1, 2), new int[] {1, 2, 3}, List.of(1, 2, 2)),
+                Arguments.of(list(1, 2), new int[] {1, 3, 5}, List.of(1, 2)),
+                Arguments.of(list(2), new int[] {0, 2, 10}, List.of(2, 0, 2, 10)),
+                Arguments.of(list(2), new int[] {}, List.of(2)),
+                Arguments.of(list(5), new int[] {-1, -2, -4}, List.of(5, -2, -4))
+        );
+    }
+
     @Test
     public void findMin_checkForNull() {
         assertThrows(IllegalArgumentException.class, () -> Collections.findMin(null));
@@ -71,7 +85,7 @@ public class CollectionsTest {
 
     @ParameterizedTest
     @MethodSource("findMinInListArguments")
-    public void findMin_test(List<Integer> list, int expectedMin) {
+    public void findMinInList_test(List<Integer> list, int expectedMin) {
         assertEquals(expectedMin, Collections.findMinInList(list));
     }
 
@@ -79,5 +93,23 @@ public class CollectionsTest {
     @MethodSource("getAverageArguments")
     public void getAverage_test(List<Float> list, float expectedAvg) {
         assertEquals(expectedAvg, Collections.getAverage(list));
+    }
+
+    @Test
+    public void addEven_checkForNull() {
+        assertThrows(IllegalArgumentException.class, () -> Collections.addEven(null, new int[] {1, 2}));
+        assertThrows(IllegalArgumentException.class, () -> Collections.addEven(list(1, 2), null));
+    }
+
+    @ParameterizedTest
+    @MethodSource("addEvenArguments")
+    public void addEven_test(List<Integer> list, int[] array, List<Integer> expected) {
+        Collections.addEven(list, array);
+        assertIterableEquals(expected, list);
+    }
+
+    @SafeVarargs
+    private static <T> List<T> list(T... items) {
+        return new ArrayList<>(Arrays.asList(items));
     }
 }
